@@ -8,4 +8,8 @@ class ImporterTest < Minitest::Test
   def test_it_should_accept_options
     assert @i.lighthouse_export_path
   end
+
+  def test_it_should_load_milestones
+    refute_empty @i.milestones
+  end
 end

@@ -5,11 +5,17 @@ class ImporterTest < Minitest::Test
     @i = Transmogriffy::Importer.new(:lighthouse_export_path => ENV['LIGHTHOUSE_EXPORT_PATH'])
   end
 
-  def test_it_should_accept_options
+  def test_options
     assert @i.lighthouse_export_path
   end
 
-  def test_it_should_load_milestones
+  def test_loading_milestones
     refute_empty @i.milestones
+  end
+
+  def test_each_milestone_has_a_title
+    @i.milestones.each do |m|
+      refute_empty m[:title]
+    end
   end
 end

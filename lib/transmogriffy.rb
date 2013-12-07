@@ -30,5 +30,21 @@ module Transmogriffy
         list
       end
     end
+
+    def tickets
+      @tickets ||= load_tickets!
+    end
+
+    def load_tickets!
+      ticket_path = File.join(lighthouse_export_path, 'tickets')
+
+      Dir.open(ticket_path).inject([]) do |list, filename|
+        ticket = JSON.parse(File.read(File.join(ticket_path, filename, 'ticket.json')))['tickets']
+
+        list << {:title => ticket['title'], :body => ticket['body'], :assignee => ticket['assigned_user_name'] || ticket['creator_name'], :milestone => ticket['milestone_title']}
+
+        list
+      end
+    end
   end
 end

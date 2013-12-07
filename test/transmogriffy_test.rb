@@ -18,4 +18,8 @@ class ImporterTest < Minitest::Test
       refute_empty m[:title]
     end
   end
+
+  def test_loading_tickets
+    refute_empty @i.tickets
+  end
 end

@@ -16,5 +16,13 @@ module Transmogriffy
     def load_milestones!
       @client.list_milestones(@repo)
     end
+
+    def issues
+      @issues||= load_issues!
+    end
+
+    def load_issues!
+      @client.list_issues(@repo)
+    end
   end
 end

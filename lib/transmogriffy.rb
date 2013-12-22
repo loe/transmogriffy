@@ -21,7 +21,12 @@ module Transmogriffy
 
         milestone = JSON.parse(File.read(File.join(milestone_path, filename)))['milestone']
 
-        list << {:title => milestone['title'], :description => milestone['goals'], :due_on => milestone['due_on'], :state => milestone['completed_at'] ? 'closed' : 'open'}
+        list << {
+          :title => milestone['title'],
+          :description => milestone['goals'],
+          :due_on => milestone['due_on'],
+          :state => milestone['completed_at'] ? 'closed' : 'open'
+        }
 
         list
       end
@@ -39,7 +44,14 @@ module Transmogriffy
 
         ticket = JSON.parse(File.read(File.join(ticket_path, folder, 'ticket.json')))['ticket']
 
-        list << {:title => ticket['title'], :body => ticket['body'], :assignee => ticket['assigned_user_name'] || ticket['creator_name'], :milestone => ticket['milestone_title']}
+        list << {
+          :title => ticket['title'],
+          :assignee => ticket['assigned_user_name'] || ticket['creator_name'],
+          :milestone => ticket['milestone_title'],
+          :labels => (ticket['tags'] || '').split(' '),
+          :versions => ticket['versions'].map { |version| {:creator_name => version['creator_name'], :body => version['body']} },
+          :state => ['closed', 'resolved', 'invalid'].include?(ticket['state']) ? 'closed' : 'open'
+        }
 
         list
       end

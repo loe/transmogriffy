@@ -34,4 +34,10 @@ class ImporterTest < Minitest::Test
       assert ['open', 'closed'].include?(t[:state])
     end
   end
+
+  def test_each_ticket_has_an_assignee
+    @i.tickets.each do |t|
+      refute_empty t[:assignee]
+    end
+  end
 end

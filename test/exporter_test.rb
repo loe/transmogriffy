@@ -6,13 +6,13 @@ class ExporterTest < Minitest::Test
   end
 
   def test_options
-    VCR.use_cassette('github') do
+    VCR.use_cassette('americano') do
       assert @e.repo
     end
   end
 
   def test_loading_milestones
-    VCR.use_cassette('github') do
+    VCR.use_cassette('americano') do
       refute_empty @e.milestones
     end
   end

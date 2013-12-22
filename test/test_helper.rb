@@ -1,8 +1,10 @@
 require 'minitest/autorun'
+require 'webmock/minitest'
 require 'vcr'
+
 require File.expand_path('../../lib/transmogriffy', __FILE__)
 
 VCR.configure do |c|
-  c.cassette_library_dir = 'fixtures/cassettes'
-  c.hook_into :faraday # Octokit is built on faraday.
+  c.cassette_library_dir = 'cassettes'
+  c.hook_into :webmock
 end

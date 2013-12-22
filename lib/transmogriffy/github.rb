@@ -1,7 +1,7 @@
 require 'octokit'
 
 module Transmogriffy
-  class Exporter
+  class Github
     attr_reader :client, :repo
 
     def initialize(options)

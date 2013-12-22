@@ -1,7 +1,7 @@
 require 'transmogriffy/version'
 require 'json'
-require 'transmogriffy/importer'
-require 'transmogriffy/exporter'
+require 'transmogriffy/lighthouse'
+require 'transmogriffy/github'
 
 module Transmogriffy
 

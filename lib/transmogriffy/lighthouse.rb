@@ -1,7 +1,7 @@
 require 'json'
 
 module Transmogriffy
-  class Importer
+  class Lighthouse
     attr_reader :lighthouse_export_path
 
     def initialize(options)

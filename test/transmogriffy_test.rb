@@ -22,4 +22,10 @@ class ImporterTest < Minitest::Test
   def test_loading_tickets
     refute_empty @i.tickets
   end
+
+  def test_each_ticket_has_a_title
+    @i.tickets.each do |t|
+      refute_empty t[:title]
+    end
+  end
 end

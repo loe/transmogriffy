@@ -4,13 +4,9 @@ require 'json'
 module Transmogriffy
   class Importer
     attr_reader :lighthouse_export_path
-    attr_accessor :milestones
 
     def initialize(options)
       @lighthouse_export_path = options[:lighthouse_export_path]
-
-      # Switch to the directory, we'll work relatively from here on.
-      Dir.chdir(lighthouse_export_path)
     end
 
     def milestones
@@ -38,8 +34,10 @@ module Transmogriffy
     def load_tickets!
       ticket_path = File.join(lighthouse_export_path, 'tickets')
 
-      Dir.open(ticket_path).inject([]) do |list, filename|
-        ticket = JSON.parse(File.read(File.join(ticket_path, filename, 'ticket.json')))['tickets']
+      Dir.open(ticket_path).inject([]) do |list, folder|
+        next list unless folder.match(/\d+-/)
+
+        ticket = JSON.parse(File.read(File.join(ticket_path, folder, 'ticket.json')))['ticket']
 
         list << {:title => ticket['title'], :body => ticket['body'], :assignee => ticket['assigned_user_name'] || ticket['creator_name'], :milestone => ticket['milestone_title']}
 

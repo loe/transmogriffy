@@ -14,6 +14,10 @@ module Transmogriffy
       @milestones ||= load_milestones!
     end
 
+    def reset_milestones!
+      @milestones = nil
+    end
+
     def load_milestones!
       # Somewhat annoying that you must define a state or Github only returns
       # milestones.

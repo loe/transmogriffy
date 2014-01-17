@@ -15,6 +15,8 @@ module Transmogriffy
         @g.create_milestone(m)
       end
 
+      @g.reset_milestones!
+
       @l.tickets.each do |t|
         @g.create_issue(t)
       end

@@ -8,3 +8,9 @@ Rake::TestTask.new do |t|
 end
 
 task :default => :test
+
+task :migrate do
+  require 'transmogriffy'
+
+  Transmogriffy::Migrator.new.migrate!
+end

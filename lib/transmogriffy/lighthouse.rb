@@ -48,7 +48,7 @@ module Transmogriffy
           :title => ticket['title'],
           :assignee => ticket['assigned_user_name'] || ticket['creator_name'],
           :milestone => ticket['milestone_title'],
-          :labels => (ticket['tag'] || '').split(' ').join(ticket['state']),
+          :labels => (ticket['tag'] || '').split(' ').push(ticket['state']),
           :state => ['closed', 'resolved', 'invalid'].include?(ticket['state']) ? 'closed' : 'open',
           :versions => ticket['versions'].map { |version| {:creator_name => version['creator_name'], :body => version['body']} }
         }

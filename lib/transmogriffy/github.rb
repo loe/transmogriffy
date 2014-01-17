@@ -54,6 +54,7 @@ module Transmogriffy
       number = options.delete(:number)
 
       unless issues.map(&:number).include?(number)
+        title = options.delete(:title)
         versions = options.delete(:versions)
         state = options.delete(:state)
         

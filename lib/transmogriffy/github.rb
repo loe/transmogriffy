@@ -51,9 +51,9 @@ module Transmogriffy
     end
 
     def create_issue(options)
-      title = options.delete(:title)
+      number = options.delete(:number)
 
-      unless issues.map(&:title).include?(title)
+      unless issues.map(&:number).include?(number)
         versions = options.delete(:versions)
         state = options.delete(:state)
         

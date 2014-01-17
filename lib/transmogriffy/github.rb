@@ -27,7 +27,7 @@ module Transmogriffy
     def load_issues!
       # Somewhat annoying that you must define a state or Github only returns
       # issues.
-      @client.list_issues(@repo, :state => 'open', :sort => 'created', :direction => 'asc').concat(@client.list_issues(@repo, :state => 'open', :sort => 'created', :direction => 'asc'))
+      @client.list_issues(@repo, :state => 'open', :sort => 'created', :direction => 'asc').concat(@client.list_issues(@repo, :state => 'closed', :sort => 'created', :direction => 'asc'))
     end
 
     def user_map

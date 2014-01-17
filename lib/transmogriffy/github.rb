@@ -61,7 +61,11 @@ module Transmogriffy
         body = versions.first[:body]
 
         # Find the milestone id by its title.
-        options[:milestone] = milestones.find { |m| m.title == options[:milestone] }[:number]
+        if m = milestones.find { |m| m.title == options[:milestone] }
+          options[:milestone] = m[:number]
+        else
+          options.delete(:milestone)
+        end
 
         # Find the assignee id by their name.
         options[:assignee] = user_map[options[:assignee]]

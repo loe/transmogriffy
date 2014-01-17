@@ -44,6 +44,7 @@ module Transmogriffy
         ticket = JSON.parse(File.read(File.join(ticket_path, folder, 'ticket.json')))['ticket']
 
         list << {
+          :number => ticket['number'],
           :title => ticket['title'],
           :assignee => ticket['assigned_user_name'] || ticket['creator_name'],
           :milestone => ticket['milestone_title'],
@@ -52,7 +53,7 @@ module Transmogriffy
           :versions => ticket['versions'].map { |version| {:creator_name => version['creator_name'], :body => version['body']} }
         }
 
-        list
+        list.sort_by! { |t| t[:number] }
       end
     end
   end

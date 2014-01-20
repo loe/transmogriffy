@@ -2,7 +2,7 @@ require_relative 'test_helper'
 
 class LighthouseTest < Minitest::Test
   def setup
-    @l = Transmogriffy::Lighthouse.new(:path => ENV['LIGHTHOUSE_PATH'])
+    @l = Transmogriffy::Lighthouse.new(:path => ENV['LIGHTHOUSE_PATH'], :user_map_path => ENV['GITHUB_USER_MAP_PATH'])
   end
 
   def test_options

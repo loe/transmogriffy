@@ -82,7 +82,7 @@ module Transmogriffy
     end
 
     def find_username_for_name(field)
-      usermap[field] ? usermap[field] : field
+      user_map[field] ? user_map[field] : field
     end
 
     def find_milestone_id_by_title(title)

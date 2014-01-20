@@ -7,7 +7,7 @@ module Transmogriffy
       @milestones_path = File.join(path, 'milestones')
       @issues_path = File.join(path, 'issues')
 
-      @user_map = JSON.parse(File.read(user_map_path))
+      @user_map = JSON.parse(File.read(options[:user_map_path]))
 
       # Ensure the directories exist.
       FileUtils.mkdir_p(milestones_path)

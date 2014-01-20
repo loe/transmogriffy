@@ -27,14 +27,8 @@ class GithubTest < Minitest::Test
     }
   end
 
-  def user_map
-    {
-      'W. Andrew Loe III' => 'loe'
-    }
-  end
-
   def setup
-    @g = Transmogriffy::Github.new(:path => ENV['GITHUB_PATH'], :user_map => user_map)
+    @g = Transmogriffy::Github.new(:path => ENV['GITHUB_PATH'], :user_map_path => ENV['GITHUB_USER_MAP_PATH'])
   end
 
   def teardown

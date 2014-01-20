@@ -2,11 +2,11 @@ require_relative 'test_helper'
 
 class LighthouseTest < Minitest::Test
   def setup
-    @l = Transmogriffy::Lighthouse.new(:lighthouse_path => ENV['LIGHTHOUSE_PATH'])
+    @l = Transmogriffy::Lighthouse.new(:path => ENV['LIGHTHOUSE_PATH'])
   end
 
   def test_options
-    assert @l.lighthouse_path
+    assert @l.path
   end
 
   def test_loading_milestones

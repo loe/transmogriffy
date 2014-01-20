@@ -1,13 +1,7 @@
-require 'octokit'
-
 module Transmogriffy
   class Github
-    attr_reader :client, :repo
 
     def initialize(options)
-      Octokit.auto_paginate = true
-      @client = Octokit::Client.new(:access_token => options[:github_token])
-      @repo = Octokit::Repository.new(options[:github_repo])
     end
 
     def milestones
@@ -32,17 +26,6 @@ module Transmogriffy
       # Somewhat annoying that you must define a state or Github only returns
       # issues.
       @client.list_issues(@repo, :state => 'open', :sort => 'created', :direction => 'asc').concat(@client.list_issues(@repo, :state => 'closed', :sort => 'created', :direction => 'asc'))
-    end
-
-    def user_map
-      {
-        "W. Andrew Loe III" => 'loe',
-        "Matthew Anderson" => 'WanderingMatt',
-        "Leigh Caplan" => 'texel',
-        "Brandon Caplan" => 'bcaplan',
-        "Brian Moran" => 'bmo',
-        "Charles Mount" => 'cmount'
-      }
     end
 
     def create_milestone(options)

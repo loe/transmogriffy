@@ -52,14 +52,18 @@ module Transmogriffy
 
         first_version = ticket['versions'].shift
 
-        comments = ticket['versions'].map do |version|
-            {
+        comments = ticket['versions'].inject([]) do |m, version|
+          if version['body'] != ''
+            m << {
               :user => version['user_name'],
               :body => version['body'],
               :created_at => version['created_at'],
               :updated_at => version['updated_at']
             }
           end
+
+          m
+        end
 
         list << {
           :number => ticket['number'],

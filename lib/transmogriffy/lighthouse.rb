@@ -16,7 +16,7 @@ module Transmogriffy
       milestone_path = File.join(lighthouse_path, 'milestones')
 
       # Counter for the milestone number.
-      idx = 0
+      idx = 1
 
       Dir.open(milestone_path).inject([]) do |list, filename|
         next list if File.directory?(filename)
@@ -24,13 +24,15 @@ module Transmogriffy
         milestone = JSON.parse(File.read(File.join(milestone_path, filename)))['milestone']
 
         list << {
-          :number => idx++,
+          :number => idx,
           :title => milestone['title'],
           :description => milestone['goals'],
           :due_on => milestone['due_on'],
           :created_at => milestone['created_at'],
           :state => milestone['completed_at'] ? 'closed' : 'open'
         }
+
+        idx = idx + 1
 
         list
       end

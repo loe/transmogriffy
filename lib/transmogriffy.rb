@@ -8,7 +8,7 @@ module Transmogriffy
     
     def initialize
       @l = Transmogriffy::Lighthouse.new(:path => ENV['LIGHTHOUSE_PATH'])
-      @g = Transmogriffy::Github.new(:path => ENV['GITHUB_PATH'])
+      @g = Transmogriffy::Github.new(:path => ENV['GITHUB_PATH'], :user_map_path => ENV['GITHUB_USER_MAP_PATH'])
     end
 
     def migrate!

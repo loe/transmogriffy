@@ -1,11 +1,11 @@
 module Transmogriffy
   class Github
-    attr_reader :github_path, :milestones_path, :issues_path
+    attr_reader :path, :milestones_path, :issues_path
 
     def initialize(options)
-      @github_path = options[:github_path]
-      @milestones_path = File.join(github_path, 'milestones')
-      @issues_path = File.join(github_path, 'issues')
+      @path = options[:path]
+      @milestones_path = File.join(path, 'milestones')
+      @issues_path = File.join(path, 'issues')
 
       # Ensure the directories exist.
       FileUtils.mkdir_p(milestones_path)

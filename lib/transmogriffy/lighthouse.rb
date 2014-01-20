@@ -1,9 +1,9 @@
 module Transmogriffy
   class Lighthouse
-    attr_reader :lighthouse_path
+    attr_reader :path
 
     def initialize(options)
-      @lighthouse_path = options[:lighthouse_path]
+      @path = options[:path]
     end
 
     def milestones
@@ -11,7 +11,7 @@ module Transmogriffy
     end
 
     def load_milestones!
-      milestone_path = File.join(lighthouse_path, 'milestones')
+      milestone_path = File.join(path, 'milestones')
 
       # Counter for the milestone number.
       idx = 1
@@ -41,7 +41,7 @@ module Transmogriffy
     end
 
     def load_tickets!
-      ticket_path = File.join(lighthouse_path, 'tickets')
+      ticket_path = File.join(path, 'tickets')
 
       Dir.open(ticket_path).inject([]) do |list, folder|
         next list unless folder.match(/\d+-/)

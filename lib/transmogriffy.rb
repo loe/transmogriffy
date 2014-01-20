@@ -7,8 +7,8 @@ module Transmogriffy
   class Migrator
     
     def initialize
-      @l = Transmogriffy::Lighthouse.new(:lighthouse_path => ENV['LIGHTHOUSE_PATH'])
-      @g = Transmogriffy::Github.new(:github_path => ENV['GITHUB_PATH'])
+      @l = Transmogriffy::Lighthouse.new(:path => ENV['LIGHTHOUSE_PATH'])
+      @g = Transmogriffy::Github.new(:path => ENV['GITHUB_PATH'])
     end
 
     def migrate!

@@ -1,18 +1,7 @@
 require_relative 'test_helper'
 
 class GithubTest < Minitest::Test
-  def setup
-    @g = Transmogriffy::Github.new(:github_path => ENV['GITHUB_PATH'])
-  end
-
-  def teardown
-    FileUtils.rmdir([@g.milestones_path, @g.issues_path])
-  end
-
-  def test_options
-    assert @g.github_path
-  end
-
+  
   def milestone
     {
       :number => 1,
@@ -36,6 +25,24 @@ class GithubTest < Minitest::Test
         }
       ]
     }
+  end
+
+  def user_map
+    {
+      'W. Andrew Loe III' => 'loe'
+    }
+  end
+
+  def setup
+    @g = Transmogriffy::Github.new(:path => ENV['GITHUB_PATH'], :user_map => user_map)
+  end
+
+  def teardown
+    FileUtils.rmdir([@g.milestones_path, @g.issues_path])
+  end
+
+  def test_options
+    assert @g.path
   end
 
   def test_create_milestone

@@ -63,12 +63,18 @@ module Transmogriffy
           m
         end
 
+        milestone = if m = milestones.find { |m| m[:title] == ticket['milestone_title'] }
+                      m[:number]
+                    else
+                      nil
+                    end
+
         list << {
           :number => ticket['number'],
           :title => ticket['title'],
           :user => ticket['user_name'],
           :assignee => ticket['assigned_user_name'],
-          :milestone => ticket['milestone_title'],
+          :milestone => milestone,
           :labels => (ticket['tag'] || '').split(' ').push(ticket['state']),
           :state => ['closed', 'resolved', 'invalid'].include?(ticket['state']) ? 'closed' : 'open',
           :body => first_version['body'],

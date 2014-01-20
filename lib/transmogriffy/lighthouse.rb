@@ -1,5 +1,3 @@
-require 'json'
-
 module Transmogriffy
   class Lighthouse
     attr_reader :lighthouse_path

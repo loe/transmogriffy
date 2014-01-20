@@ -1,3 +1,4 @@
+require 'json'
 require 'transmogriffy/version'
 require 'transmogriffy/lighthouse'
 require 'transmogriffy/github'

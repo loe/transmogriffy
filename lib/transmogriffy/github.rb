@@ -14,7 +14,7 @@ module Transmogriffy
 
     def create_milestone(options)
       puts "Creating milestone: ##{options[:number]}: #{options[:title]}"
-      File.open(File.join(milestone_path, "#{options[:number]}.json"), 'w+') { |f| f.write(options.to_json) }
+      File.open(File.join(milestones_path, "#{options[:number]}.json"), 'w+') { |f| f.write(options.to_json) }
     end
 
     def create_issue(options)

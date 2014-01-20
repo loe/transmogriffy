@@ -24,6 +24,7 @@ module Transmogriffy
           :title => milestone['title'],
           :description => milestone['goals'],
           :due_on => milestone['due_on'],
+          :created_at => milestone['created_at'],
           :state => milestone['completed_at'] ? 'closed' : 'open'
         }
 

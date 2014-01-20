@@ -2,11 +2,11 @@ require_relative 'test_helper'
 
 class LighthouseTest < Minitest::Test
   def setup
-    @l = Transmogriffy::Lighthouse.new(:lighthouse_export_path => ENV['LIGHTHOUSE_EXPORT_PATH'])
+    @l = Transmogriffy::Lighthouse.new(:lighthouse_path => ENV['LIGHTHOUSE_PATH'])
   end
 
   def test_options
-    assert @l.lighthouse_export_path
+    assert @l.lighthouse_path
   end
 
   def test_loading_milestones
@@ -16,6 +16,12 @@ class LighthouseTest < Minitest::Test
   def test_each_milestone_has_a_title
     @l.milestones.each do |m|
       refute_empty m[:title]
+    end
+  end
+
+  def test_each_milestone_has_a_number
+    @l.milestones.each do |m|
+      refute_nil m[:number]
     end
   end
 
@@ -35,9 +41,9 @@ class LighthouseTest < Minitest::Test
     end
   end
 
-  def test_each_ticket_has_an_assignee
+  def test_each_ticket_has_a_user
     @l.tickets.each do |t|
-      refute_empty t[:assignee]
+      refute_empty t[:user]
     end
   end
 end

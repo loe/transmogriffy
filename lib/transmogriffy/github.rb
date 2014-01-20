@@ -13,15 +13,25 @@ module Transmogriffy
     end
 
     def create_milestone(options)
-      puts "Creating milestone: ##{options[:number]}: #{options[:title]}"
-      File.open(File.join(milestones_path, "#{options[:number]}.json"), 'w+') { |f| f.write(options.to_json) }
+      File.open(milestone_path(options[:number]), 'w+') { |f| f.write(options.to_json) }
     end
 
     def create_issue(options)
-      puts "Creating issue: ##{options[:number]}: #{options[:title]}"
       comments = options.delete(:comments)
-      File.open(File.join(issues_path, "#{options[:number]}.json"), 'w+') { |f| f.write(options.to_json) }
-      File.open(File.join(issues_path, "#{options[:number]}.comments.json"), 'w+') { |f| f.write(comments.to_json) }
+      File.open(issue_path(options[:number]), 'w+') { |f| f.write(options.to_json) }
+      File.open(issue_comments_path(options[:number]), 'w+') { |f| f.write(comments.to_json) }
+    end
+
+    def milestone_path(id)
+      File.join(milestones_path, "#{id}.json")
+    end
+
+    def issue_path(id)
+      File.join(issues_path, "#{id}.json")
+    end
+
+    def issue_comments_path(id)
+      File.join(issues_path, "#{id}.comments.json")
     end
   end
 end

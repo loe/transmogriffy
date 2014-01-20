@@ -51,7 +51,7 @@ module Transmogriffy
         first_version = ticket['versions'].shift
 
         comments = ticket['versions'].inject([]) do |m, version|
-          if version['body'] != ''
+          if !version['body'].nil? && version['body'] != ''
             m << {
               :user => version['user_name'],
               :body => version['body'],

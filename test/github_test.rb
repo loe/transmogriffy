@@ -26,7 +26,15 @@ class GithubTest < Minitest::Test
 
   def issue
     {
-      
+      :number => 1,
+      :title => 'The Issue',
+      :body => 'Hello',
+      :comments => [
+        {
+          :user => 'W. Andrew Loe III',
+          :body => 'commenting.'
+        }
+      ]
     }
   end
 
@@ -36,4 +44,15 @@ class GithubTest < Minitest::Test
     refute_empty m['title']
   end
 
+  def test_create_issue
+    @g.create_issue(issue)
+    i = JSON.parse(File.read(@g.issue_path(issue[:number])))
+    refute_empty i['title']
+  end
+
+  def test_create_comment
+    @g.create_issue(issue)
+    c = JSON.parse(File.read(@g.issue_comments_path(issue[:number])))
+    refute_empty c.first['body']
+  end
 end

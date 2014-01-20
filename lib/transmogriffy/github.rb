@@ -1,13 +1,11 @@
 module Transmogriffy
   class Github
-    attr_reader :path, :milestones_path, :issues_path, :user_map_path
+    attr_reader :path, :milestones_path, :issues_path
 
     def initialize(options)
       @path = options[:path]
       @milestones_path = File.join(path, 'milestones')
       @issues_path = File.join(path, 'issues')
-
-      @user_map = JSON.parse(File.read(options[:user_map_path]))
 
       # Ensure the directories exist.
       FileUtils.mkdir_p(milestones_path)

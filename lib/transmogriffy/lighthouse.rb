@@ -1,9 +1,10 @@
 module Transmogriffy
   class Lighthouse
-    attr_reader :path
+    attr_reader :path, :user_map
 
     def initialize(options)
       @path = options[:path]
+      @user_map = JSON.parse(File.read(options[:user_map_path]))
     end
 
     def milestones
@@ -53,7 +54,7 @@ module Transmogriffy
         comments = ticket['versions'].inject([]) do |m, version|
           if !version['body'].nil? && version['body'] != ''
             m << {
-              :user => version['user_name'],
+              :user => find_username_for_name(version['user_name']),
               :body => version['body'],
               :created_at => version['created_at'],
               :updated_at => version['updated_at']
@@ -63,18 +64,13 @@ module Transmogriffy
           m
         end
 
-        milestone = if m = milestones.find { |m| m[:title] == ticket['milestone_title'] }
-                      m[:number]
-                    else
-                      nil
-                    end
 
         list << {
           :number => ticket['number'],
           :title => ticket['title'],
-          :user => ticket['user_name'],
-          :assignee => ticket['assigned_user_name'],
-          :milestone => milestone,
+          :user => find_username_for_name(ticket['user_name']),
+          :assignee => find_username_for_name(ticket['assigned_user_name']),
+          :milestone => find_milestone_id_by_title(ticket['milestone_title']),
           :labels => (ticket['tag'] || '').split(' ').push(ticket['state']),
           :state => ['closed', 'resolved', 'invalid'].include?(ticket['state']) ? 'closed' : 'open',
           :body => first_version['body'],
@@ -82,6 +78,18 @@ module Transmogriffy
         }
 
         list.sort_by! { |t| t[:number] }
+      end
+    end
+
+    def find_username_for_name(field)
+      usermap[field] ? usermap[field] : field
+    end
+
+    def find_milestone_id_by_title(title)
+      if m = milestones.find { |m| m[:title] == title }
+        m[:number]
+      else
+        nil
       end
     end
   end

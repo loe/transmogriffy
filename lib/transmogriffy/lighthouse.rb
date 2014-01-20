@@ -2,10 +2,10 @@ require 'json'
 
 module Transmogriffy
   class Lighthouse
-    attr_reader :lighthouse_export_path
+    attr_reader :lighthouse_path
 
     def initialize(options)
-      @lighthouse_export_path = options[:lighthouse_export_path]
+      @lighthouse_path = options[:lighthouse_path]
     end
 
     def milestones
@@ -13,7 +13,10 @@ module Transmogriffy
     end
 
     def load_milestones!
-      milestone_path = File.join(lighthouse_export_path, 'milestones')
+      milestone_path = File.join(lighthouse_path, 'milestones')
+
+      # Counter for the milestone number.
+      idx = 0
 
       Dir.open(milestone_path).inject([]) do |list, filename|
         next list if File.directory?(filename)
@@ -21,6 +24,7 @@ module Transmogriffy
         milestone = JSON.parse(File.read(File.join(milestone_path, filename)))['milestone']
 
         list << {
+          :number => idx++,
           :title => milestone['title'],
           :description => milestone['goals'],
           :due_on => milestone['due_on'],
@@ -37,7 +41,7 @@ module Transmogriffy
     end
 
     def load_tickets!
-      ticket_path = File.join(lighthouse_export_path, 'tickets')
+      ticket_path = File.join(lighthouse_path, 'tickets')
 
       Dir.open(ticket_path).inject([]) do |list, folder|
         next list unless folder.match(/\d+-/)

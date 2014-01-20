@@ -1,79 +1,27 @@
 module Transmogriffy
   class Github
+    attr_reader :github_path, :milestones_path, :issues_path
 
     def initialize(options)
-    end
+      @github_path = options[:github_path]
+      @milestones_path = File.join(github_path, 'milestones')
+      @issues_path = File.join(github_path, 'issues')
 
-    def milestones
-      @milestones ||= load_milestones!
-    end
-
-    def reset_milestones!
-      @milestones = nil
-    end
-
-    def load_milestones!
-      # Somewhat annoying that you must define a state or Github only returns
-      # milestones.
-      @client.list_milestones(@repo, :state => 'open', :sort => 'created', :direction => 'asc').concat(@client.list_milestones(@repo, :state => 'closed', :sort => 'created', :direction => 'asc'))
-    end
-
-    def issues
-      @issues ||= load_issues!
-    end
-
-    def load_issues!
-      # Somewhat annoying that you must define a state or Github only returns
-      # issues.
-      @client.list_issues(@repo, :state => 'open', :sort => 'created', :direction => 'asc').concat(@client.list_issues(@repo, :state => 'closed', :sort => 'created', :direction => 'asc'))
+      # Ensure the directories exist.
+      FileUtils.mkdir_p(milestones_path)
+      FileUtils.mkdir_p(issues_path)
     end
 
     def create_milestone(options)
-      title = options.delete(:title)
-
-      unless milestones.map(&:title).include?(title)
-        puts "Creating milestone: #{title}"
-        @client.create_milestone(@repo, title, options)
-      end
+      puts "Creating milestone: ##{options[:number]}: #{options[:title]}"
+      File.open(File.join(milestone_path, "#{options[:number]}.json"), 'w+') { |f| f.write(options.to_json) }
     end
 
     def create_issue(options)
-      number = options.delete(:number)
-
-      unless issues.map(&:number).include?(number)
-        title = options.delete(:title)
-        versions = options.delete(:versions)
-        state = options.delete(:state)
-        
-        # Extract the first version and use that as the body.
-        body = versions.first[:body]
-
-        # Find the milestone id by its title.
-        if m = milestones.find { |m| m.title == options[:milestone] }
-          options[:milestone] = m[:number]
-        else
-          options.delete(:milestone)
-        end
-
-        # Find the assignee id by their name.
-        options[:assignee] = user_map[options[:assignee]]
-
-        puts "Creating issue: #{title}"
-        issue = @client.create_issue(@repo, title, body, options)
-
-        # Append subsequent versions as comments on the issue.
-        versions.each do |v|
-          if !v[:body].nil? && v[:body] != ""
-            b = "#{v[:creator_name]}:\n#{v[:body]}"
-            @client.add_comment(@repo, issue[:number], b)
-          end
-        end
-
-        # Close the issue if necessary
-        if state == 'closed'
-          @client.close_issue(@repo, issue[:number])
-        end
-      end
+      puts "Creating issue: ##{options[:number]}: #{options[:title]}"
+      comments = options.delete(:comments)
+      File.open(File.join(issues_path, "#{options[:number]}.json"), 'w+') { |f| f.write(options.to_json) }
+      File.open(File.join(issues_path, "#{options[:number]}.comments.json"), 'w+') { |f| f.write(comments.to_json) }
     end
   end
 end

@@ -5,7 +5,6 @@
 }
 ```
 
-```
 # Export the Environment
 ```bash
 export LIGHTHOUSE_PATH=/Users/you/Downloads/project

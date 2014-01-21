@@ -68,6 +68,8 @@ module Transmogriffy
         list << {
           :number => ticket['number'],
           :title => ticket['title'],
+          :created_at => ticket['created_at'],
+          :updated_at => ticket['updated_at'],
           :user => find_username_for_name(ticket['user_name']),
           :assignee => find_username_for_name(ticket['assigned_user_name']),
           :milestone => find_milestone_id_by_title(ticket['milestone_title']),

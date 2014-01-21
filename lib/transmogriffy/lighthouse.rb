@@ -22,9 +22,16 @@ module Transmogriffy
 
         milestone = JSON.parse(File.read(File.join(milestone_path, filename)))['milestone']
 
+        title = milestone['title']
+
+        # Ensure milestone names are unique.
+        if list.map { |m| m[:title] }.include?(title)
+          title = "#{title} #{idx}"
+        end
+
         list << {
           :number => idx,
-          :title => milestone['title'],
+          :title => title,
           :description => milestone['goals'],
           :due_on => milestone['due_on'],
           :created_at => milestone['created_at'],
@@ -52,7 +59,7 @@ module Transmogriffy
         first_version = ticket['versions'].shift
 
         comments = ticket['versions'].inject([]) do |m, version|
-          if !version['body'].nil? && version['body'] != ''
+          if !version['body'].blank?
             m << {
               :user => find_username_for_name(version['user_name']),
               :body => version['body'],

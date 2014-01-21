@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest"
 
   spec.add_runtime_dependency "json"
-  spec.add_runtime_dependency "active_support"
+  spec.add_runtime_dependency "activesupport"
 end
